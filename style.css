@@ -1,0 +1,71 @@
+body {
+    padding: 50px;
+    font-family: "NanumSquare";
+    font-size: 1.2rem;
+}
+.container {
+    width: 60%;
+}
+.header {
+    width: 90%;
+    position: relative;
+}
+.move {
+    font-size: 2.5rem;
+}
+.move:focus {
+    box-shadow: none;
+}
+.move:disabled {
+    opacity: 10%;
+}
+.move:hover {
+    opacity: 0.5;
+}
+#notice {
+    width: 100%;
+    /*position: absolute;*/
+}
+.week div {
+    width: calc(100%/7);
+}
+.month {
+    flex-wrap: wrap;
+}
+.month div {
+    width: calc(100%/7);
+    height: 70px;
+    line-height: 70px;
+}
+.days:hover {
+    background: rgb(240, 240, 240);
+    opacity: 0.6;
+}
+.red {
+    background: coral;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.orange {
+    background: orange;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.yellow {
+    background: gold;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.green {
+    background: yellowgreen;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
