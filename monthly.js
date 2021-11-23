@@ -24,8 +24,10 @@ function saveStorage(date)
 
 function buildCalendar()
 {
-    const actualToday = new Date();
     let date = today.toJSON().slice(0,8), i;
+
+    //check if current today is in future
+    const actualToday = new Date();
     let forward = document.querySelector("#forward");
     if (date >= actualToday.toJSON().slice(0, 8)) {
         today = actualToday;
@@ -33,6 +35,7 @@ function buildCalendar()
     }
     else forward.disabled = false;
     
+
     //make the shape of calendar
     let month = document.querySelector(".month");
     let bound = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
@@ -55,7 +58,8 @@ function buildCalendar()
         month.appendChild(day);
     }
 
-    //calculate how many days the user has finished routine for in row;
+
+    //calculate how many days the user has finished routine for in row
     let days = [ ...document.querySelectorAll(".days span") ];
     bound = today.getDate() - 1;
     for (i = bound; i >= 0; i--) {
@@ -67,10 +71,11 @@ function buildCalendar()
     else if (i === bound - 1) notice.innerHTML = '<i class="bi bi-calendar-check pe-2"></i>Lovely! You finshed everything you planned today.';
     else notice.innerHTML = `<i class="bi bi-emoji-heart-eyes pe-2"></i>Lovely! You have been killing the plans for ${bound-i} days.`;
     
+    
     //print today's month & year and mark today with border
     document.querySelector("#month-info").textContent = months[today.getMonth()];
     document.querySelector("#year-info").textContent = today.getFullYear();
-    days[bound].parentElement.classList.add("border");
+    days[bound].parentElement.setAttribute("id", "today");
 }
 
 window.addEventListener("load", () => {

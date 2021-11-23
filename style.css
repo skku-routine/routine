@@ -39,7 +39,10 @@ body {
 }
 .days:hover {
     background: rgb(240, 240, 240);
-    opacity: 0.6;
+    opacity: 0.8;
+}
+#today {
+    border: 2px solid rgb(240, 240, 240);
 }
 .red {
     background: coral;
