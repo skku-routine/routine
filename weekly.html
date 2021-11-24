@@ -49,12 +49,27 @@
         <div class="bottom">
             <!--Hidden text area and submit button-->
             <div class="inputArea" hidden="true">
-                <input type="color" class="category" id="categoryColor"/>
-                <input type="text" class="form-control" id="categoryText" placeholder="CATEGORY here"/>
-                <input type="text" class="form-control" id="nameText" placeholder="ROUTINE here"/>
-                <button id="submit" type="submit" class="btn btn-outline-success">
-                    Add
-                </button>
+                
+                <div class="d-flex flex-column">
+                    <div class="d-flex mb-2">
+                    <input type="color" class="category" id="categoryColor"/>
+                    <input type="text" class="form-control" id="categoryText" placeholder="CATEGORY here"/>
+                    <input type="text" class="form-control" id="nameText" />
+                    <button id="submit" type="submit" class="btn btn-outline-success">
+                        Add
+                    </button>
+                    </div>
+                
+                <div class="day-select-area d-flex flex-row">
+                    <button type="button" class="day-select selected">SUN</button>
+                    <button type="button" class="day-select selected">MON</button>
+                    <button type="button" class="day-select selected">TUE</button>
+                    <button type="button" class="day-select selected">WED</button>
+                    <button type="button" class="day-select selected">THU</button>
+                    <button type="button" class="day-select selected">FRI</button>
+                    <button type="button" class="day-select selected">SAT</button>
+                </div>
+                </div>
             </div>
             <!--Add button-->
             <button class="button add"><i class="bi bi-plus-lg"></i></button>
@@ -75,6 +90,7 @@
                 empty: 0,
                 done: 1,
                 failed: 2,
+                disabled: -1
             };
 
             // Habit object
@@ -83,10 +99,11 @@
             let colorText = "black";
             let habit = {
                 name: nameText,
-                weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
+                weeklyStatus: [-1, -1, -1, -1, -1, -1, -1],              
                 category: categoryText,
                 cateColor: colorText,
             };
+
 
             // Load data when window is loaded
             function loadHabits() {
@@ -175,11 +192,14 @@
                         checkbox.classList.add("done");
                     } else if (habit.weeklyStatus[day] === status.failed) {
                         checkbox.classList.add("failed");
-                    }
+                    } else if (habit.weeklyStatus[day] === status.disabled) {
+                        checkbox.classList.add("disabled");
+                    } // is this right??
 
                     // Add eventlistener
                     // Click to change status : empty->done->failed
                     checkbox.addEventListener("click", () => {
+                        if (checkbox.classList.contains("disabled")) return;
                         if (checkbox.classList.contains("done")) {
                             checkbox.classList.replace("done", "failed");
                             habit.weeklyStatus[checkbox.classList[1]] =
@@ -232,16 +252,34 @@
                 // Create new habit object
                 let newHabit = {
                     name: textInput,
-                    weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
+                    weeklyStatus: [-1, -1, -1, -1, -1, -1, -1],                      
                     category: categoryInput,
                     cateColor: categoryInputColor,
                 };
+
+                let selectDays = document.querySelectorAll(".day-select");
+                for (let i=0; i<7; i++){
+                    if(selectDays[i].classList.contains("selected")){
+                        newHabit.weeklyStatus[i] = 0;
+                    }
+                }
                 document.getElementById("nameText").value = ""; // Clear the text
                 document.getElementById("categoryText").value = "";
                 // document.getElementById("categoryInputColor").value = "";
                 inputArea.hidden = true;
+                selectDays.forEach(e => e.classList.remove("selected"));
                 addHabit(newHabit);
             });
+
+            document.querySelectorAll(".day-select").forEach((e) => {
+                e.addEventListener("click", () => {
+                    if(e.classList.contains("selected")) {
+                        e.classList.remove("selected");
+                    } else {
+                        e.classList.add("selected");
+                    }
+                })
+            })
         </script>
     </body>
 </html>

@@ -9,6 +9,7 @@ header {
 body {
     width: 720px;
     margin: auto;
+    margin-bottom: 5%;
     background-color: rgb(230, 230, 230);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
@@ -34,14 +35,15 @@ body {
 .days-of-week {
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding-right: 2px;
+    margin-right: 35px;
+    margin-bottom: -6px;
 }
 
 .day {
     text-align: center;
-    padding-right: 13px;
-    font-size: 12px;
+    font-size: 13px;
+    width: 40px;
+    margin: 2px;
 }
 
 .contents {
@@ -148,4 +150,24 @@ span:hover #delete-button {
     margin: 6px;
     width: 40px;
     height: 30px;
+}
+
+.day-select {
+    border: none;
+    margin: 0.3rem;
+    font-size: 14px;
+    color: rgb(173, 173, 173);
+    font-weight: bold;
+}
+
+.day-select.selected {
+    color: rgb(2, 163, 2);
+}
+
+.checkbox.disabled {
+    opacity: 0.3;
+}
+
+.checkbox.disabled:hover{
+  opacity: 0.3;
 }
