@@ -1,3 +1,4 @@
+/*monthly*/
 body {
     padding: 50px;
     font-family: "NanumSquare";
@@ -71,4 +72,151 @@ body {
     display: inline-block;
     line-height: 50px;
     width: 50px;
+}
+
+/* head */
+header {
+    border-bottom: 1px solid black;
+    margin: 0.5rem;
+    margin-bottom: 10px;
+}
+
+/* top */
+.top {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 30px 30px;
+}
+
+.today-d {
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+.page-buttons {
+    justify-content: flex-end;
+    margin: 2px;
+}
+
+.days-of-week {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding-right: 2px;
+}
+
+.day {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding-right: 2px;
+}
+
+.day div {
+    text-align: center;
+    padding-right: 13px;
+    font-size: 12px;
+}
+
+.contents {
+    margin: 10px;
+}
+
+/* habit group */
+.habit-group {
+    display: flex;
+    border-radius: 10px;
+    margin: 0 20px 5px 20px;
+    padding: 5px;
+    background-color: white;
+}
+
+.habit {
+    flex-grow: 1;
+    margin: 0.5em;
+    margin-left: 1em;
+}
+
+.weekly-accomplishment {
+    display: flex;
+    align-items: center;
+}
+
+/* delete button */
+#delete-button::before {
+    content:"Delete";
+}
+
+span #delete-button {
+    visibility: hidden;
+    margin-right: 10px;
+}
+
+span:hover #delete-button {
+    visibility: visible;
+}
+
+/* checkbox */
+.checkbox {
+    background: #e3e3e3;
+    opacity: 0.7;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 3px;
+    margin: 2px;
+    text-align: center;
+}
+
+.checkbox:hover{
+    opacity: 0.9;
+}
+
+.checkbox.done::before{
+    content:"✔️"; 
+}
+
+.checkbox.failed::before{
+    content:"❌";
+}
+
+.checkbox.disabled {
+    pointer-events: none;
+}
+/* bottom */
+.bottom{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 70px;
+}
+
+.inputArea {
+    display: flex;
+}
+
+#submit {
+    margin-left: 10px;
+}
+
+/* add button */
+.button.add{
+    background-color: green;
+    border-radius: 50%;
+    border: none;
+    margin: 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
+    color: white;
+    display: inline-grid;
+}
+
+.button.add:hover{
+    opacity:0.9;
+}
+
+.bi.bi-plus-lg {
+    width: 48px !important;
+    height: 48px !important;
 }

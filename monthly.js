@@ -8,7 +8,7 @@ function loadStorage(date)
     if (!routine) return "";
     
     routines[date] = JSON.parse(routine);
-    let status = routines[date].reduce((acc, element) => (acc + element.done), 0) / routines[date].length;
+    let status = routines[date].reduce((acc, element) => (acc + (element.done % 2)), 0) / routines[date].length;
         
     if (status < 0.33) return "red";
     else if (status < 0.66) return "orange";
@@ -76,18 +76,19 @@ function buildCalendar()
     document.querySelector("#month-info").textContent = months[today.getMonth()];
     document.querySelector("#year-info").textContent = today.getFullYear();
     days[bound].parentElement.setAttribute("id", "today");
-}
 
-window.addEventListener("load", () => {
-    //saveStorage("2021-11-25");
-    buildCalendar();
-    
+
     //move to weekly view
     document.querySelectorAll(".days").forEach(day => {
         day.addEventListener("click", () => {
             window.location.href = "weekly.html?date=" + today.toJSON().slice(0,8) + day.textContent;
         });
     });
+}
+
+window.addEventListener("load", () => {
+    //saveStorage("2021-11-25");
+    buildCalendar();
 
     //move backwards or forwards in month
     document.querySelector("#backward").addEventListener("click", () => {

@@ -14,15 +14,19 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
     <link rel="stylesheet" href="style.css">
     
-    <title>Routine | Monthly View</title>
+    <title>Habit Maker | Monthly</title>
 </head>
 
 <body>
     <div class="container">
         <div class="header d-flex align-items-baseline mx-auto">
+            <!-- Month and year information of today -->
             <button id="backward" class="move btn"><i class="bi bi-chevron-compact-left"></i></button>
-            <h1 id="month-info" class="fw-bold"></h1><p id="year-info"></p>
+            <h1 id="month-info" class="fw-bold"></h1>
+            <p id="year-info"></p>
             <button id="forward" class="move btn" disabled><i class="bi bi-chevron-compact-right"></i></button>
+            
+            <!-- How many days the user have done tasks in row -->
             <p id="notice" class="text-end"></p>
         </div>
         
@@ -37,6 +41,7 @@
                 <div>SAT</div>
             </div>
 
+            <!-- Days of this month -->
             <div class="month d-flex text-center fw-bold">
             </div>
         </div>
