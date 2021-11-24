@@ -143,3 +143,9 @@ span:hover #delete-button {
     width: 48px !important;
     height: 48px !important;
 }
+
+.category{
+    margin: 6px;
+    width: 40px;
+    height: 30px;
+}
