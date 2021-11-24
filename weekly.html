@@ -52,6 +52,8 @@
                 
                 <div class="d-flex flex-column">
                     <div class="d-flex mb-2">
+                    <input type="color" class="category" id="categoryColor"/>
+                    <input type="text" class="form-control" id="categoryText" placeholder="CATEGORY here"/>
                     <input type="text" class="form-control" id="nameText" />
                     <button id="submit" type="submit" class="btn btn-outline-success">
                         Add
@@ -93,9 +95,13 @@
 
             // Habit object
             let nameText = "";
+            let categoryText = "";
+            let colorText = "black";
             let habit = {
                 name: nameText,
-                weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
+                weeklyStatus: [-1, -1, -1, -1, -1, -1, -1],              
+                category: categoryText,
+                cateColor: colorText,
             };
 
 
@@ -148,7 +154,15 @@
                 // .habit
                 let divHabit = document.createElement("div");
                 divHabit.className = "habit";
-                divHabit.innerText = habit.name;
+                let Color = document.createElement("span");
+                Color.style.color=habit.cateColor;
+                Color.innerText="■ ";
+                divHabit.appendChild(Color);
+                // divHabit.innerHTML = '<span style="color: red">■ </span>';
+                let text = document.createElement("span");
+                text.innerText=habit.category + " | " + habit.name;
+                divHabit.appendChild(text);
+                // divHabit.innerText = habit.category + " | " + habit.name;
                 div.appendChild(divHabit);
 
                 // .weekly-accomplishment
@@ -230,13 +244,17 @@
             let submitButton = document.querySelector("#submit");
             submitButton.addEventListener("click", () => {
                 let textInput = document.getElementById("nameText").value;
+                let categoryInput = document.getElementById("categoryText").value;
+                let categoryInputColor = document.getElementById("categoryColor").value;
 
-                if(textInput==="") return;
+                if(textInput==="" || categoryInput==="") return;
 
                 // Create new habit object
                 let newHabit = {
                     name: textInput,
-                    weeklyStatus: [-1, -1, -1, -1, -1, -1, -1],
+                    weeklyStatus: [-1, -1, -1, -1, -1, -1, -1],                      
+                    category: categoryInput,
+                    cateColor: categoryInputColor,
                 };
 
                 let selectDays = document.querySelectorAll(".day-select");
@@ -246,6 +264,8 @@
                     }
                 }
                 document.getElementById("nameText").value = ""; // Clear the text
+                document.getElementById("categoryText").value = "";
+                // document.getElementById("categoryInputColor").value = "";
                 inputArea.hidden = true;
                 selectDays.forEach(e => e.classList.remove("selected"));
                 addHabit(newHabit);
