@@ -49,7 +49,7 @@
         <div class="bottom">
             <!--Hidden text area and submit button-->
             <div class="inputArea" hidden="true">
-                <input type="color" class="category" id="categoryColor" value/>
+                <input type="color" class="category" id="categoryColor"/>
                 <input type="text" class="form-control" id="categoryText" placeholder="CATEGORY here"/>
                 <input type="text" class="form-control" id="nameText" placeholder="ROUTINE here"/>
                 <button id="submit" type="submit" class="btn btn-outline-success">
@@ -80,12 +80,12 @@
             // Habit object
             let nameText = "";
             let categoryText = "";
-            let color = document.createElement("p");
-            color.innerHTML='<span style="color: red">■ </span>';
+            let colorText = "black";
             let habit = {
                 name: nameText,
                 weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
                 category: categoryText,
+                cateColor: colorText,
             };
 
             // Load data when window is loaded
@@ -137,7 +137,15 @@
                 // .habit
                 let divHabit = document.createElement("div");
                 divHabit.className = "habit";
-                divHabit.innerText = habit.category + " | " + habit.name;
+                let Color = document.createElement("span");
+                Color.style.color=habit.cateColor;
+                Color.innerText="■ ";
+                divHabit.appendChild(Color);
+                // divHabit.innerHTML = '<span style="color: red">■ </span>';
+                let text = document.createElement("span");
+                text.innerText=habit.category + " | " + habit.name;
+                divHabit.appendChild(text);
+                // divHabit.innerText = habit.category + " | " + habit.name;
                 div.appendChild(divHabit);
 
                 // .weekly-accomplishment
@@ -219,9 +227,6 @@
                 let categoryInput = document.getElementById("categoryText").value;
                 let categoryInputColor = document.getElementById("categoryColor").value;
 
-                let color = document.createElement("p");
-                color.innerHTML='<span style="color: red">■ </span>';
-
                 if(textInput==="" || categoryInput==="") return;
 
                 // Create new habit object
@@ -229,9 +234,11 @@
                     name: textInput,
                     weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
                     category: categoryInput,
+                    cateColor: categoryInputColor,
                 };
                 document.getElementById("nameText").value = ""; // Clear the text
                 document.getElementById("categoryText").value = "";
+                // document.getElementById("categoryInputColor").value = "";
                 inputArea.hidden = true;
                 addHabit(newHabit);
             });
