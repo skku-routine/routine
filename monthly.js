@@ -2,14 +2,24 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 let today = new Date();
 let routines = {};
 
+Date.prototype.string = function () {
+    let yyyy = this.getFullYear();
+    let mm = this.getMonth() + 1;
+    let dd = this.getDate();
+    let string = [yyyy, ("0" + mm).slice(-2), ("0" + dd).slice(-2)].join("-");
+    
+    return string;
+}
+
 function loadStorage(date)
 {
     let routine = localStorage.getItem(date);
     if (!routine) return "";
     
     routines[date] = JSON.parse(routine);
-    let status = routines[date].reduce((acc, element) => (acc + (element.done % 2)), 0) / routines[date].length;
-        
+    if (routines[date].length === 0) return "";
+
+    let status = routines[date].reduce((acc, element) => (acc + (element.stat % 2)), 0) / routines[date].length;
     if (status < 0.33) return "red";
     else if (status < 0.66) return "orange";
     else if (status < 0.99) return "yellow";
@@ -18,18 +28,18 @@ function loadStorage(date)
 
 function saveStorage(date)
 {
-    //let routine = [{task: "take a walk", done: 1}, {task: "exercise", done: 1}, {task: "exercise", done: 1}, {task: "exercise", done: 1}];
+    let routine = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 0}, {name: "mylove", stat: 1}, {name: "youare", stat: 0}];
     localStorage.setItem(date, JSON.stringify(routine));
 }
 
-function buildCalendar()
+function buildMonth()
 {
-    let date = today.toJSON().slice(0,8), i;
+    let date = today.string().slice(0,8), i;
 
     //check if current today is in future
     const actualToday = new Date();
     let forward = document.querySelector("#forward");
-    if (date >= actualToday.toJSON().slice(0, 8)) {
+    if (date >= actualToday.string().slice(0, 8)) {
         today = actualToday;
         forward.disabled = true;
     }
@@ -46,7 +56,7 @@ function buildCalendar()
     bound = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
     for (i = 1; i <= today.getDate(); i++) {
         let day = document.createElement("div");
-        let status = loadStorage(date+i);
+        let status = loadStorage(date+("0" + i).slice(-2));
         day.classList.add("days");
         day.innerHTML = `<span class="${status}">${i}</span>`;
         month.appendChild(day);
@@ -75,20 +85,20 @@ function buildCalendar()
     //print today's month & year and mark today with border
     document.querySelector("#month-info").textContent = months[today.getMonth()];
     document.querySelector("#year-info").textContent = today.getFullYear();
-    days[bound].parentElement.setAttribute("id", "today");
+    days[bound].parentElement.setAttribute("id", "current");
 
 
     //move to weekly view
     document.querySelectorAll(".days").forEach(day => {
         day.addEventListener("click", () => {
-            window.location.href = "weekly.html?date=" + today.toJSON().slice(0,8) + day.textContent;
+            window.location.href = "weekly.html?date=" + today.string().slice(0,8) + ("0" + day.textContent).slice(-2);
         });
     });
 }
 
 window.addEventListener("load", () => {
-    //saveStorage("2021-11-25");
-    buildCalendar();
+    saveStorage("2021-10-29");
+    buildMonth();
 
     //move backwards or forwards in month
     document.querySelector("#backward").addEventListener("click", () => {
@@ -97,7 +107,7 @@ window.addEventListener("load", () => {
             month.removeChild(month.firstChild);
         }
         today.setDate(0);
-        buildCalendar();
+        buildMonth();
     });
     document.querySelector("#forward").addEventListener("click", () => {
         let month = document.querySelector(".month");
@@ -105,6 +115,6 @@ window.addEventListener("load", () => {
             month.removeChild(month.firstChild);
         }
         today.setMonth(today.getMonth()+2, 0);
-        buildCalendar();
+        buildMonth();
     });
 });

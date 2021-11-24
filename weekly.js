@@ -1,71 +1,117 @@
-let date, day;
+const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+let today;
+let routines = {};
+let archive = [];
+
+// Make string out of date using local time zone
+Date.prototype.string = function () {
+    let yyyy = this.getFullYear();
+    let mm = this.getMonth() + 1;
+    let dd = this.getDate();
+    let string = [yyyy, ("0"+mm).slice(-2), ("0" + dd).slice(-2)].join("-");
+    
+    return string;
+}
 
 // Date of today
 function parseURL()
 {
     let url = document.location.href;
-    let todays = url.split('?date=')[1].split('-');
+    let todays = url.split('?date=')[1];
+    if (!todays) {
+        today = new Date();
+        todays = [today.getFullYear(), today.getMonth()+1, today.getDate()];
+    }
+    else {
+        todays = todays.split('-');
+        today = new Date(todays[0], todays[1]-1, todays[2]);
+    }
 
-    let today = new Date(todays[0], todays[1]-1, todays[2]);
-    let day = today.getDay();
-    const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-    document.querySelector(".today-d").textContent =
-        todays[1] + " " + todays[1] + " " + week[day];
-    
-    date = today.toJSON().slice(0, 8);
+    document.querySelector(".today").textContent =
+        todays[0] + " " + todays[1] + " " + week[today.getDay()];
 }
 
-/*
-LoadHabits
-1. 요일값 이용해서 for문으로 이번주에 load해야 하는 date 7개 찾기
-2. 찾으면 date로 getItem
-3. let archive[date] = JSON.parse로 저장
+// Correct records of this week in case the user didn't logged in for a while
+function correctRecord(firstDate)
+{
+    let date, dateValue = firstDate.getDate();
 
-값 설정
-0. 그날을 기준으로 하는 거니까 오늘의 key만 받아오기
+    for (let i = 0; i < 30; i++) {
+        date = new Date(firstDate);
+        date.setDate(dateValue--);
+        
+        let routine = localStorage.getItem(date.string());
+        console.log(date.string());
+        if (routine) {
+            archive = JSON.parse(routine);
+            archive.forEach(habit => habit.stat = 0);
+            
+            routines[firstDate.string()] = archive;
+            return;
+        }
+    }
+    routines[firstDate.string()] = [];
+}
 
-1. 그냥 만들었을 때: 0
-2. 체크 안 해줬을 때: 0
-3. 체크했을 때: 1
-4. 지웠을 때 오늘 이후로: undefined => add("disabled")
-5. 새로 만들었을 때 오늘 전으로: undefiend => add("disabled")
-6. 체크 안 하고 하루 이상 지나갔을 때: 2로 수정해주기!!
+// Load data when window is loaded
+function loadHabits(date)
+{
+    let routine = localStorage.getItem(date);
+    if (!routine) {
+        routines[date] = archive;
+        return;
+    }
+    routines[date] = JSON.parse(routine);
+    archive = JSON.parse(routine);
+    archive.forEach(habit => habit.stat = 0);
+}
 
-save-load 방식 수정
-*/
+function buildWeek()
+{
+    let dateValue = today.getDate() - today.getDay();
+    let date = new Date(today);
+    date.setDate(dateValue++);
+    correctRecord(date);
+
+    ///date = new Date(today);
+    for (let i = 0; i < 6; i++) {
+        date = new Date(today);
+        date.setDate(dateValue++);
+        loadHabits(date.string());
+    }
+    archive = Object.keys(routines);
+    archive.forEach(saveHabits);
+    routines[today.string()].forEach(addHabit);
+}
+
+function addToStorage(habit) {
+    let date = new Date(today);
+    dateValue = today.getDate();
+    for (let i = 0; i < 7 - today.getDay(); i++) {
+        date.setDate(dateValue++);
+        let string = date.string();
+        routines[string].push(habit);
+        
+        saveHabits(string);
+    }
+    console.log(routines);
+}
+
+// Save habits to local storage
+function saveHabits(date) {
+    localStorage.setItem(date, JSON.stringify(routines[date]));
+}
+
+window.addEventListener("load", () => {
+    parseURL();
+    buildWeek();
+});
 
 // Accomplishment status
 const Status = {
     Empty: 0,
-    Done: 1,
-    Failed: 2       //필요한지?
+    Done: 1
 };
-
-// Habit object
-let habit = {
-    name: "",
-    status: 0,
-};
-
-// Load data when window is loaded
-function loadHabits() {
-    let archive = [], keys = Object.keys(localStorage), i = 0, key;
-
-    for (; (key = keys[i]); i++) {
-        archive.push(JSON.parse(localStorage.getItem(key)));
-    }
-    archive.forEach(addHabit);
-}
-
-window.addEventListener("load", () => {
-    loadHabits();
-});
-
-// Save habit object to local storage
-function saveHabit(habit) {
-    // Use name of the habit as key
-    localStorage.setItem(habit.name, JSON.stringify(habit));
-}
 
 // Create habit element and append to .contents
 function addHabit(habit) {
@@ -106,61 +152,83 @@ function addHabit(habit) {
     deleteButton.id = "delete-button";
     deleteButton.addEventListener("click", () => {
         div.remove();
-        localStorage.removeItem(habit.name); // Remove data from local storage
+
+        let date = new Date(today);
+        dateValue = today.getDate();
+        for (let i = 0; i < 7 - today.getDay(); i++) {
+            date.setDate(dateValue++);
+            let string = date.string();
+            let name = div.firstChild.textContent;
+
+            let array = routines[string];
+            for (let k = 0; k < array.length; k++) {
+                element = array[k];
+                if (element.name === name) {
+                    array.splice(k, 1); break;
+                }
+            }
+            saveHabits(string);
+        }
     });
 
-    let span = document.createElement("span"); // to make it visible when hovered
+    // Make button visible when hovered
+    let span = document.createElement("span");
     span.appendChild(deleteButton);
-    //divWeek.appendChild(deleteButton);
     divWeek.appendChild(span);
+    //divWeek.appendChild(deleteButton);
 
+    
     // .checkbox
-    for (day in week) {
+    for (let day = 0; day < 7; day++) {
         let checkbox = document.createElement("div");
-        checkbox.className = "checkbox " + day; // add 0~6 to distinguish days
+        
+        // add 0~6 to distinguish days
+        checkbox.className = "checkbox " + day;
+        
         // status of the day (done or failed)
-        if (habit.weeklyStatus[day] === Status.Done) {
-            checkbox.classList.add("done");
-        } else if (habit.weeklyStatus[day] === Status.Failed) {
-            checkbox.classList.add("failed");
-        }
-
+        let array = routines[archive[day]];
+        let element, DNE = true;
+        for (let i = 0; i < array.length; i++) {
+            element = array[i];
+            if (element.name === habit.name) {
+                if (element.stat === Status.Done) {
+                    checkbox.classList.add("done");
+                }
+                else if (element.stat === Status.Empty && day < today.getDay()) {
+                    checkbox.classList.add("failed");
+                }
+                DNE = false; break;
+            }
+        } if (DNE) checkbox.classList.add("disabled");
+        
         // Add eventlistener
         // Click to change status : empty->done->failed
         checkbox.addEventListener("click", () => {
             if (checkbox.classList.contains("done")) {
                 checkbox.classList.replace("done", "failed");
-                habit.weeklyStatus[checkbox.classList[1]] =
-                    Status.Failed; // Update weeklyStatus of habit object
+                element.stat = Status.Empty;
             } else if (checkbox.classList.contains("failed")) {
                 checkbox.classList.remove("failed");
-                habit.weeklyStatus[checkbox.classList[1]] =
-                    Status.Empty;
             } else {
                 checkbox.classList.add("done");
-                habit.weeklyStatus[checkbox.classList[1]] =
-                    Status.Done;
+                element.stat = Status.Done;
             }
 
             // Save status
-            saveHabit(habit);
+            saveHabits(archive[day]);
         });
 
         divWeek.appendChild(checkbox); // Append to weekly-accomplishment class
     }
-
     div.appendChild(divWeek);
 
     // Append to .contents
     let contents = document.querySelector(".contents");
     contents.appendChild(div);
-
-    saveHabit(habit); // Save to local storage
 }
 
 // Add eventlistener to Add button
 let addButton = document.querySelector(".button.add");
-
 let inputArea = document.querySelector(".inputArea");
 
 addButton.addEventListener("click", () => {
@@ -172,15 +240,17 @@ addButton.addEventListener("click", () => {
 let submitButton = document.querySelector("#submit");
 submitButton.addEventListener("click", () => {
     let textInput = document.getElementById("nameText").value;
-
-    if(textInput==="") return;
+    if (textInput === "") return;
 
     // Create new habit object
     let newHabit = {
         name: textInput,
-        weeklyStatus: [0, 0, 0, 0, 0, 0, 0],
+        stat: 0
     };
-    document.getElementById("nameText").value = ""; // Clear the text
+    // Clear the text
+    document.getElementById("nameText").value = "";
     inputArea.hidden = true;
+
+    addToStorage(newHabit);
     addHabit(newHabit);
 });
