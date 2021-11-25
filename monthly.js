@@ -1,6 +1,6 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let today = new Date();
-let archive;
+let records = [], archive = [];
 
 Date.prototype.string = function () {
     let yyyy = this.getFullYear();
@@ -12,29 +12,41 @@ Date.prototype.string = function () {
 
 function correctRecord()
 {
-    archive = [];
+    records = [];
 
     let bound = new Date(today.getFullYear(), today.getMonth(), 0);
     let date = bound.string().slice(0, 8); bound = bound.getDate();
 
     for (let i = bound; i > 0; i--) {
-        let routine = localStorage.getItem(date+("0" + i).slice(-2));
-        if (routine) {
-            archive = JSON.parse(routine);
-            archive.forEach(habit => habit.stat = 0);
+        let data = localStorage.getItem(date+("0" + i).slice(-2));
+        if (data) {
+            records = JSON.parse(data);
+            records.forEach(habit => habit.stat = 0);
             return;
         }
     }
 }
 
-function loadStorage(date)
-{
-    let routine = localStorage.getItem(date);
-    if (routine) archive = JSON.parse(routine);
-    else archive.forEach(habit => habit.stat = 0);
+let definedHabit = {
+    name: "",
+    stat : 0
+}
 
-    if (archive.length === 0) return "";
-    let status = archive.reduce((acc, element) => (acc + (element.stat % 2)), 0) / archive.length;
+function loadStorage(date, dayValue)
+{
+    let data = localStorage.getItem(date);
+    if (data) records = JSON.parse(data);
+    else {
+        records = [];
+        archive.forEach(habit => {
+            if (habit.days[dayValue] && habit.created <= date && habit.deleted > date) {
+                definedHabit.name = habit.name;
+                records.push(definedHabit);
+            }
+        });
+    }
+    if (records.length === 0) return "";
+    let status = records.reduce((acc, record) => (acc + (record.stat % 2)), 0) / records.length;
     
     if (status < 0.33) return "red";
     else if (status < 0.66) return "orange";
@@ -44,8 +56,12 @@ function loadStorage(date)
 
 function saveStorage(date)
 {
-    //let routine = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 0}, {name: "mylove", stat: 1}, {name: "youare", stat: 0}];
-    localStorage.setItem(date, JSON.stringify(routine));
+    /*let record = [{name: "take a walk", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
+                    {name: "exercise", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
+                    {name: "mylove", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
+                    {name: "youare", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"}];*/
+    let data = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 1}, {name: "mylove", stat: 1}, {name: "youare", stat: 1}];
+    localStorage.setItem(date, JSON.stringify(data));
 }
 
 function buildMonth()
@@ -62,7 +78,9 @@ function buildMonth()
     else forward.disabled = false;
     
     //correct records of this week in case the user didn't logged in for a while
-    correctRecord();
+    //correctRecord();
+    let data = localStorage.getItem("habits");
+    if (data) archive = JSON.parse(data);
 
     //make the shape of calendar
     let month = document.querySelector(".month");
@@ -71,10 +89,11 @@ function buildMonth()
         let day = document.createElement("div");
         month.appendChild(day);
     }
+    let dayValue = bound;
     bound = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-    for (i = 1; i <= today.getDate(); i++) {
+    for (i = 1; i <= today.getDate(); i++, dayValue++) {
         let day = document.createElement("div");
-        let status = loadStorage(date+("0" + i).slice(-2));
+        let status = loadStorage(date+("0" + i).slice(-2), dayValue % 7);
         day.classList.add("days");
         day.innerHTML = `<span class="${status}">${i}</span>`;
         month.appendChild(day);
@@ -115,7 +134,7 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
-    //saveStorage("2021-10-29");
+    saveStorage("2021-10-29");
     buildMonth();
 });
 

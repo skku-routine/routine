@@ -16,3 +16,6 @@ console.log(date);
 let bound = new Date(today.getFullYear(), today.getMonth()-1, 1);
 let start = new Date(today.getFullYear(), today.getMonth(), 0);
 console.log(bound.toString(), start.toString());
+
+let todays = "2021-02-12";
+console.log(todays < "3");
