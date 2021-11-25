@@ -1,25 +1,41 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let today = new Date();
-let routines = {};
+let archive;
 
 Date.prototype.string = function () {
     let yyyy = this.getFullYear();
     let mm = this.getMonth() + 1;
     let dd = this.getDate();
-    let string = [yyyy, ("0" + mm).slice(-2), ("0" + dd).slice(-2)].join("-");
-    
-    return string;
+
+    return [yyyy, ("0" + mm).slice(-2), ("0" + dd).slice(-2)].join("-");
+}
+
+function correctRecord()
+{
+    archive = [];
+
+    let bound = new Date(today.getFullYear(), today.getMonth(), 0);
+    let date = bound.string().slice(0, 8); bound = bound.getDate();
+
+    for (let i = bound; i > 0; i--) {
+        let routine = localStorage.getItem(date+("0" + i).slice(-2));
+        if (routine) {
+            archive = JSON.parse(routine);
+            archive.forEach(habit => habit.stat = 0);
+            return;
+        }
+    }
 }
 
 function loadStorage(date)
 {
     let routine = localStorage.getItem(date);
-    if (!routine) return "";
-    
-    routines[date] = JSON.parse(routine);
-    if (routines[date].length === 0) return "";
+    if (routine) archive = JSON.parse(routine);
+    else archive.forEach(habit => habit.stat = 0);
 
-    let status = routines[date].reduce((acc, element) => (acc + (element.stat % 2)), 0) / routines[date].length;
+    if (archive.length === 0) return "";
+    let status = archive.reduce((acc, element) => (acc + (element.stat % 2)), 0) / archive.length;
+    
     if (status < 0.33) return "red";
     else if (status < 0.66) return "orange";
     else if (status < 0.99) return "yellow";
@@ -28,7 +44,7 @@ function loadStorage(date)
 
 function saveStorage(date)
 {
-    let routine = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 0}, {name: "mylove", stat: 1}, {name: "youare", stat: 0}];
+    //let routine = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 0}, {name: "mylove", stat: 1}, {name: "youare", stat: 0}];
     localStorage.setItem(date, JSON.stringify(routine));
 }
 
@@ -45,6 +61,8 @@ function buildMonth()
     }
     else forward.disabled = false;
     
+    //correct records of this week in case the user didn't logged in for a while
+    correctRecord();
 
     //make the shape of calendar
     let month = document.querySelector(".month");
@@ -97,24 +115,24 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
-    saveStorage("2021-10-29");
+    //saveStorage("2021-10-29");
     buildMonth();
+});
 
-    //move backwards or forwards in month
-    document.querySelector("#backward").addEventListener("click", () => {
-        let month = document.querySelector(".month");
-        while (month.firstChild) {
-            month.removeChild(month.firstChild);
-        }
-        today.setDate(0);
-        buildMonth();
-    });
-    document.querySelector("#forward").addEventListener("click", () => {
-        let month = document.querySelector(".month");
-        while (month.firstChild) {
-            month.removeChild(month.firstChild);
-        }
-        today.setMonth(today.getMonth()+2, 0);
-        buildMonth();
-    });
+//move backwards or forwards in month
+document.querySelector("#backward").addEventListener("click", () => {
+    let month = document.querySelector(".month");
+    while (month.firstChild) {
+        month.removeChild(month.firstChild);
+    }
+    today.setDate(0);
+    buildMonth();
+});
+document.querySelector("#forward").addEventListener("click", () => {
+    let month = document.querySelector(".month");
+    while (month.firstChild) {
+        month.removeChild(month.firstChild);
+    }
+    today.setMonth(today.getMonth()+2, 0);
+    buildMonth();
 });

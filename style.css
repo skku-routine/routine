@@ -178,7 +178,7 @@ span:hover #delete-button {
     content:"❌";
 }
 
-.checkbox.disabled {
+.disabled {
     pointer-events: none;
 }
 /* bottom */

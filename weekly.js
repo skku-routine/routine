@@ -1,5 +1,5 @@
 const week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-let today;
+let today, current;
 let routines = {};
 let archive = [];
 
@@ -8,9 +8,8 @@ Date.prototype.string = function () {
     let yyyy = this.getFullYear();
     let mm = this.getMonth() + 1;
     let dd = this.getDate();
-    let string = [yyyy, ("0"+mm).slice(-2), ("0" + dd).slice(-2)].join("-");
     
-    return string;
+    return [yyyy, ("0" + mm).slice(-2), ("0" + dd).slice(-2)].join("-");
 }
 
 // Date of today
@@ -29,6 +28,10 @@ function parseURL()
 
     document.querySelector(".today").textContent =
         todays[0] + " " + todays[1] + " " + week[today.getDay()];
+
+    const actualToday = new Date();
+    if (today.string() === actualToday.string()) current = true;
+    else current = false;
 }
 
 // Correct records of this week in case the user didn't logged in for a while
@@ -66,6 +69,11 @@ function loadHabits(date)
     archive.forEach(habit => habit.stat = 0);
 }
 
+// Save habits to local storage
+function saveHabits(date) {
+    localStorage.setItem(date, JSON.stringify(routines[date]));
+}
+
 function buildWeek()
 {
     let dateValue = today.getDate() - today.getDay();
@@ -97,16 +105,6 @@ function addToStorage(habit) {
     console.log(routines);
 }
 
-// Save habits to local storage
-function saveHabits(date) {
-    localStorage.setItem(date, JSON.stringify(routines[date]));
-}
-
-window.addEventListener("load", () => {
-    parseURL();
-    buildWeek();
-});
-
 // Accomplishment status
 const Status = {
     Empty: 0,
@@ -115,24 +113,7 @@ const Status = {
 
 // Create habit element and append to .contents
 function addHabit(habit) {
-    /*
-    <div class="habit-group">
-        <div class="habit">habit_name</div>
-        <div class="weekly-accomplishment">
-            <button class="btn btn-danger" id="delete-button"></button>
-            <div class="checkbox 0"></div>
-            <div class="checkbox 1"></div>
-            <div class="checkbox 2"></div>
-            <div class="checkbox 3"></div>
-            <div class="checkbox 4"></div>
-            <div class="checkbox 5"></div>
-            <div class="checkbox 6"></div>
-        </div>
-    </div>
-    */
-
-    // Create habit-group element
-    // .habit-group
+    // Create .habit-group
     let div = document.createElement("div");
     div.className = "habit-group";
 
@@ -150,6 +131,8 @@ function addHabit(habit) {
     let deleteButton = document.createElement("button");
     deleteButton.className = "btn btn-danger";
     deleteButton.id = "delete-button";
+    
+    if (!current) deleteButton.classList.add("disabled");
     deleteButton.addEventListener("click", () => {
         div.remove();
 
@@ -227,13 +210,19 @@ function addHabit(habit) {
     contents.appendChild(div);
 }
 
-// Add eventlistener to Add button
-let addButton = document.querySelector(".button.add");
-let inputArea = document.querySelector(".inputArea");
+window.addEventListener("load", () => {
+    parseURL();
+    buildWeek();
 
-addButton.addEventListener("click", () => {
-    inputArea.hidden ? inputArea.hidden = false : inputArea.hidden = true;
-    //inputArea.hidden = false;
+    // Add eventlistener to Add button
+    let addButton = document.querySelector(".button.add");
+    let inputArea = document.querySelector(".inputArea");
+
+    if (!current) addButton.classList.add("disabled");
+    addButton.addEventListener("click", () => {
+        inputArea.hidden ? inputArea.hidden = false : inputArea.hidden = true;
+        //inputArea.hidden = false;
+    });
 });
 
 // Add eventlistener to Submit button
