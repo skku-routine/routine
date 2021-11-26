@@ -100,13 +100,16 @@ function addHabit(habit) {
 
     let [ text, color ] = habit.category.split("=");
     let category = document.createElement("span");
-    category.innerText = text + " | " + habit.name;
+    category.innerText = text + " | ";
+    let habitName = document.createElement("span");
+    habitName.textContent = habit.name;
     let categoryColor = document.createElement("span");
     categoryColor.innerText="■ ";
     categoryColor.style.color = color;
 
     divHabit.appendChild(categoryColor);
     divHabit.appendChild(category);
+    divHabit.appendChild(habitName);
     div.appendChild(divHabit);
 
     // .weekly-accomplishment
@@ -122,14 +125,14 @@ function addHabit(habit) {
     if (today.string() !== actualToday) deleteButton.classList.add("disabled");
     deleteButton.addEventListener("click", () => {
         div.remove();
-
-        let name = div.firstChild.textContent;
-        for (let i = 0; i < archive.length(); i++) {
+        
+        let name = div.firstChild.lastChild.textContent;
+        for (let i = 0; i < archive.length; i++) {
             if (habit.name === name) {
                 if (habit.created === actualToday) archive.splice(i, 1);
                 else habit.deleted = actualToday;
                 
-                break;
+                localStorage.setItem("habits", JSON.stringify(archive)); break;
             }
         }
         let date = new Date(today);

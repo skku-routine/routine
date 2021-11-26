@@ -5,7 +5,7 @@ body {
     font-size: 1.2rem;
 }
 .container {
-    width: 60%;
+    width: 80%;
 }
 
 .move {
@@ -23,26 +23,27 @@ body {
 
 .header {
     width: 90%;
+    padding-top: 0;
     position: relative;
 }
 #notice {
     width: 100%;
 }
 
-
 .calendar {
     background-color: white;
 }
 .week div {
     width: calc(100%/7);
+    margin-top: 0.5rem;
 }
 .month {
     flex-wrap: wrap;
 }
 .month div {
     width: calc(100%/7);
-    height: 70px;
-    line-height: 70px;
+    height: 60px;
+    line-height: 60px;
 }
 .days:hover {
     background: rgb(240, 240, 240);
