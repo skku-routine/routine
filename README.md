@@ -10,8 +10,8 @@
 + 압축을 해제하고 `habit_maker.exe`를 실행하면 앱을 사용할 수 있습니다.
 
 #### Source Code
-+ git clone 혹은 소스코드 압축파일을 다운받습니다.
-+ 터미널에서 electron을 설치하고(`npm install --save-dev electron`) `npm start`를 입력하면 실행됩니다.
++ 아래의 코드와 같이 `git clone`을 실행하거나, GitHub에서 소스코드 압축 파일을 다운받아 압축을 해제합니다.
++ 터미널에서 electron을 설치하고(`npm install --save-dev electron`), `npm start`를 입력하면 실행됩니다.
 ```
 git clone https://github.com/skku-routine/routine.git
 npm install electron
