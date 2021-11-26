@@ -74,7 +74,9 @@ function addToStorage(habit) {
     // Save only from today to end of the week
     let date = new Date(today);
     let dateValue = today.getDate();
-    for (let i = 0; i < 7 - today.getDay(); i++) {
+    for (let day = today.getDay(); day < 7; day++) {
+        if (!habit.days[day]) continue;
+
         date.setDate(dateValue++);
         let string = date.string();
         
@@ -128,13 +130,10 @@ function addHabit(habit) {
         
         let name = div.firstChild.lastChild.textContent;
         for (let i = 0; i < archive.length; i++) {
-            if (habit.name === name) {
-                if (habit.created === actualToday) archive.splice(i, 1);
-                else {
-                    let replaceHabit = habit;
-                    replaceHabit.deleted = actualToday;
-                    archive.splice(i, 1, replaceHabit);
-                }
+            if (archive[i].name === name) {
+                if (archive[i].created === actualToday) archive.splice(i, 1);
+                else archive[i].deleted = actualToday;
+
                 localStorage.setItem("habits", JSON.stringify(archive)); break;
             }
         }
@@ -146,8 +145,7 @@ function addHabit(habit) {
 
             let array = records[string];
             for (let k = 0; k < array.length; k++) {
-                let record = array[k];
-                if (record.name === name) {
+                if (array[k].name === name) {
                     array.splice(k, 1); break;
                 }
             }
