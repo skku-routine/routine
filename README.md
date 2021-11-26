@@ -3,10 +3,10 @@
 잊어버리기 쉽지만 캘린더에 기록하기엔 거창한 반복 일정을 계획하고, 실천 현황을 기록합니다.
 
 ## Install
-git clone 후, routine을 설치하고(“npm install routine) 터미널 창에 “npm start”를 입력하면 실행됩니다.
+git clone 후, routine을 설치하고(“npm install electron) 터미널 창에 “npm start”를 입력하면 실행됩니다.
 ```
 git clone https://github.com/skku-routine/routine.git
-npm install routine
+npm install electron
 npm start
 ```
 
@@ -14,8 +14,9 @@ npm start
 
 #### 앱 실행 및 종료
 * 앱 실행
-    - 환영 메시지와 함께 코로나 관련 시설 이용 방침 안내창이
+    - 환영 메시지와 함께 코로나19 관련 시설 이용 방침 안내창이
 뜹니다. 각 시설(식당 및 카페, 헬스장, 독서실 및 스터디카페) 버튼 위에 마우스를 올리면 간단한 정보를 안내받을 수 있습니다.
+        - 코로나19 방역 수칙은 2021.11.1 수도권 기준입니다.(https://news.seoul.go.kr/welfare/archives/537018)
     - "SKIP" 버튼을 클릭하면 루틴 앱으로 넘어갑니다.
 * 종료
     - 종료 시 루틴 종류 및 상태가 저장됩니다.
