@@ -1,0 +1,24 @@
+{
+  "name": "routine",
+  "version": "1.0.0",
+  "description": "잊어버리기 쉽지만 캘린더에 기록하기엔 거창한 반복 일정을 계획하고, 실천 현황을 기록합니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hans-0101/routine.git"
+  },
+  "author": "TEAM_11",
+  "contributors": [
+    "Inseo Nam",
+    "Sori Lim",
+    "Sumin Han"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hans-0101/routine/issues"
+  },
+  "homepage": "https://github.com/Hans-0101/routine#readme"
+}
