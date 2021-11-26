@@ -39,15 +39,6 @@ function loadStorage(date, dayValue)
     else return "green";
 }
 
-function saveStorage(date)
-{
-    let data = [{name: "take a walk", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"3", category:"운동=#f00000"},
-                    {name: "exercise", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"3",  category:"운동=#f00000"},
-                    {name: "mylove", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"3",  category:"운동=#f00000"},
-                    {name: "youare", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"3",  category:"운동=#f00000"}];
-    localStorage.setItem("habits", JSON.stringify(data));
-}
-
 // Build the page of monthly view
 function buildMonth()
 {
@@ -120,7 +111,6 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
-    //saveStorage("2021-10-30");
     buildMonth();
 });
 
