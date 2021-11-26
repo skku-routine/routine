@@ -130,8 +130,11 @@ function addHabit(habit) {
         for (let i = 0; i < archive.length; i++) {
             if (habit.name === name) {
                 if (habit.created === actualToday) archive.splice(i, 1);
-                else habit.deleted = actualToday;
-                
+                else {
+                    let replaceHabit = habit;
+                    replaceHabit.deleted = actualToday;
+                    archive.splice(i, 1, replaceHabit);
+                }
                 localStorage.setItem("habits", JSON.stringify(archive)); break;
             }
         }
@@ -168,6 +171,8 @@ function addHabit(habit) {
         let array = (list[day] > actualToday) ? [] : records[list[day]];
         let record, DNE = true;
         for (let i = 0; i < array.length; i++) {
+            if (!habit.days[day]) break;
+            
             record = array[i];
             if (record.name === habit.name) {
                 if (record.stat === Status.Done) {
