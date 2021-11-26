@@ -3,7 +3,7 @@ let today;
 let records = {};
 let archive = [], list = [];
 
-// Make string out of date using local time zone
+// Convert Date object into string local time
 Date.prototype.string = function () {
     let yyyy = this.getFullYear();
     let mm = this.getMonth() + 1;
@@ -13,16 +13,19 @@ Date.prototype.string = function () {
 }
 const actualToday = new Date().string();
 
-// Date of today
+// Parse 'today'
 function parseURL()
 {
     let url = document.location.href;
     let todays = url.split('?date=')[1];
+
     if (!todays) {
+        // This page is loaded by index.html
         today = new Date();
         todays = [today.getFullYear(), today.getMonth()+1, today.getDate()];
-    }
+    }               
     else {
+        // This page is loaded by monthly.html
         todays = todays.split('-');
         today = new Date(todays[0], todays[1]-1, todays[2]);
     }
@@ -42,6 +45,8 @@ function loadHabits(date, dayValue)
 {
     let data = localStorage.getItem(date);
     if (data) records[date] = JSON.parse(data);
+    
+    // If the user never logged in to app on current date
     else {
         records[date] = [];
         archive.forEach(habit => {
@@ -61,10 +66,12 @@ function saveHabits(date) {
     localStorage.setItem(date, JSON.stringify(records[date]));
 }
 
+// Save the list of all habits and the list of habits added to that day
 function addToStorage(habit) {
     archive.push(habit);
     localStorage.setItem("habits", JSON.stringify(archive));
 
+    // Save only from today to end of the week
     let date = new Date(today);
     let dateValue = today.getDate();
     for (let i = 0; i < 7 - today.getDay(); i++) {
@@ -79,7 +86,6 @@ function addToStorage(habit) {
         
         saveHabits(string);
     }
-    console.log(records);
 }
 
 // Create habit element and append to .contents
@@ -112,6 +118,7 @@ function addHabit(habit) {
     deleteButton.className = "btn btn-danger";
     deleteButton.id = "delete-button";
     
+    // Disable deleting feature if it's not actually 'today'
     if (today.string() !== actualToday) deleteButton.classList.add("disabled");
     deleteButton.addEventListener("click", () => {
         div.remove();
@@ -146,17 +153,15 @@ function addHabit(habit) {
     let span = document.createElement("span");
     span.appendChild(deleteButton);
     divWeek.appendChild(span);
-    //divWeek.appendChild(deleteButton);
-
     
     // .checkbox
     for (let day = 0; day < 7; day++) {
         let checkbox = document.createElement("div");
         
-        // add 0~6 to distinguish days
+        // Add 0~6 to distinguish days
         checkbox.className = "checkbox " + day;
         
-        // status of the day (done or failed)
+        // Status of the day (done or failed)
         let array = (list[day] > actualToday) ? [] : records[list[day]];
         let record, DNE = true;
         for (let i = 0; i < array.length; i++) {
@@ -173,7 +178,6 @@ function addHabit(habit) {
         } if (DNE) checkbox.classList.add("disabled");
         
         // Add eventlistener
-        // Click to change status : Miss->done->failed
         checkbox.addEventListener("click", () => {
             if (checkbox.classList.contains("done")) {
                 checkbox.classList.replace("done", "failed");
@@ -198,6 +202,7 @@ function addHabit(habit) {
     contents.appendChild(div);
 }
 
+// Build the page of weekly view
 function buildWeek()
 {
     let data = localStorage.getItem("habits");
@@ -223,6 +228,7 @@ window.addEventListener("load", () => {
     let addButton = document.querySelector(".button.add");
     let inputArea = document.querySelector(".inputArea");
 
+    // Disable adding feature if it's not actually 'today'
     if (today.string() !== actualToday) addButton.classList.add("disabled");
     addButton.addEventListener("click", () => {
         inputArea.hidden ? inputArea.hidden = false : inputArea.hidden = true;
@@ -254,15 +260,13 @@ submitButton.addEventListener("click", () => {
     document.getElementById("nameText").value = "";
     document.getElementById("categoryText").value = "";
     document.querySelector(".inputArea").hidden = true;
-    selectDays.forEach(e => {
-        if (!e.classList.contains("selected"))
-            e.classList.add("selected");
-    });
+    selectDays.forEach(e => e.classList.add("selected"));
 
     addToStorage(newHabit);
     addHabit(newHabit);
 });
 
+// Select days of week to assign habits only to selected ones
 document.querySelectorAll(".day-select").forEach((e) => {
     e.addEventListener("click", () => {
         if (e.classList.contains("selected")) e.classList.remove("selected");

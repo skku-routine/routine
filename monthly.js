@@ -2,6 +2,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 let today = new Date();
 let records = [], archive = [];
 
+// Convert Date object into string local time
 Date.prototype.string = function () {
     let yyyy = this.getFullYear();
     let mm = this.getMonth() + 1;
@@ -15,6 +16,7 @@ let definedHabit = {
     stat : 0
 }
 
+// Load data when new calendar of a month is needed
 function loadStorage(date, dayValue)
 {
     let data = localStorage.getItem(date);
@@ -29,7 +31,7 @@ function loadStorage(date, dayValue)
         });
     }
     if (records.length === 0) return "";
-    let status = records.reduce((acc, record) => (acc + (record.stat % 2)), 0) / records.length;
+    let status = records.reduce((acc, record) => (acc + record.stat), 0) / records.length;
     
     if (status < 0.33) return "red";
     else if (status < 0.66) return "orange";
@@ -37,11 +39,17 @@ function loadStorage(date, dayValue)
     else return "green";
 }
 
+function saveStorage(date)
+{
+    localStorage.setItem("habits", JSON.stringify(data));
+}
+
+// Build the page of monthly view
 function buildMonth()
 {
     let date = today.string().slice(0,8), i;
 
-    //check if current today is in future
+    // Check if current today is in future
     const actualToday = new Date();
     let forward = document.querySelector("#forward");
     if (date >= actualToday.string().slice(0, 8)) {
@@ -50,11 +58,11 @@ function buildMonth()
     }
     else forward.disabled = false;
     
-    //correct records of this week in case the user didn't logged in for a while
+    // Correct records of this week in case the user didn't logged in for a while
     let data = localStorage.getItem("habits");
     if (data) archive = JSON.parse(data);
 
-    //make the shape of calendar
+    // Make the shape of calendar
     let month = document.querySelector(".month");
     let bound = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
     for (let i = bound; i > 0; i--) {
@@ -78,12 +86,14 @@ function buildMonth()
     }
 
 
-    //calculate how many days the user has finished routine for in row
+    // Calculate how many days the user has finished routine for in row
     let days = [ ...document.querySelectorAll(".days span") ];
     bound = today.getDate() - 1;
     for (i = bound; i >= 0; i--) {
         if (!days[i].classList.contains("green")) break;
     }
+
+    // Show user different messages according to status
     let notice = document.querySelector("#notice");
     if (i === bound) notice.innerHTML = '<i class="bi bi-chat-right-quote pe-2"></i>Hurry up! Let\'s kick start getting things done!';
     else if (i === 0) notice.innerHTML = '<i class="bi bi-award pe-2"></i>Completed all your plans this month. Keep up!';
@@ -91,13 +101,13 @@ function buildMonth()
     else notice.innerHTML = `<i class="bi bi-emoji-heart-eyes pe-2"></i>Lovely! You have been killing the plans for ${bound-i} days.`;
     
     
-    //print today's month & year and mark today with border
+    // Print today's month & year and mark today with border
     document.querySelector("#month-info").textContent = months[today.getMonth()];
     document.querySelector("#year-info").textContent = today.getFullYear();
     days[bound].parentElement.setAttribute("id", "current");
 
 
-    //move to weekly view
+    // Move to weekly view
     document.querySelectorAll(".days").forEach(day => {
         day.addEventListener("click", () => {
             window.location.href = "weekly.html?date=" + today.string().slice(0,8) + ("0" + day.textContent).slice(-2);
@@ -106,10 +116,11 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
+    //saveStorage("2021-10-30");
     buildMonth();
 });
 
-//move backwards or forwards in month
+// Move backwards or forwards in month
 document.querySelector("#backward").addEventListener("click", () => {
     let month = document.querySelector(".month");
     while (month.firstChild) {
