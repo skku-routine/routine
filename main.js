@@ -17,5 +17,16 @@ let bound = new Date(today.getFullYear(), today.getMonth()-1, 1);
 let start = new Date(today.getFullYear(), today.getMonth(), 0);
 console.log(bound.toString(), start.toString());
 
-let todays = "2021-02-12";
-console.log(todays < "3");
+let todays = "";
+let [a, b] = todays.split("=");
+console.log(a, b);
+
+categoryInput = "";
+categoryInputColor = "";
+let newHabit = {
+    created: today.string(),
+    deleted: "3",
+};
+console.log(newHabit.created <= today.string() && newHabit.deleted > today.string());
+
+//console.log(newHabit.category.split("="));

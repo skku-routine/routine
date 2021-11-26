@@ -56,12 +56,13 @@ function loadStorage(date, dayValue)
 
 function saveStorage(date)
 {
-    /*let record = [{name: "take a walk", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
-                    {name: "exercise", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
-                    {name: "mylove", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"},
-                    {name: "youare", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05"}];*/
-    let data = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 1}, {name: "mylove", stat: 1}, {name: "youare", stat: 1}];
-    localStorage.setItem(date, JSON.stringify(data));
+    /*let data = [{name: "take a walk", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "일상=#ff0000"},
+                    {name: "exercise", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "운동=#15fd00"},
+                    {name: "mylove", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "사랑=#d53151"},
+                    {name: "youare", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "정의=#f3ca7b"},
+                    {name: "what", days: [1, 0, 0, 0, 0, 0, 1], created: "2021-02-27", deleted:"2021-06-18", category: "뭐여=#000000"}];
+    //let data = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 1}, {name: "mylove", stat: 0}, {name: "youare", stat: 1}];*/
+    localStorage.setItem("habits", JSON.stringify(data));
 }
 
 function buildMonth()
@@ -78,7 +79,6 @@ function buildMonth()
     else forward.disabled = false;
     
     //correct records of this week in case the user didn't logged in for a while
-    //correctRecord();
     let data = localStorage.getItem("habits");
     if (data) archive = JSON.parse(data);
 
@@ -134,7 +134,7 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
-    saveStorage("2021-10-29");
+    //saveStorage("2021-10-30");
     buildMonth();
 });
 

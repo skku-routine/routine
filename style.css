@@ -1,10 +1,14 @@
 body {
+    background-color: rgb(240, 240, 240);
     padding: 50px;
     font-family: "NanumSquare";
     font-size: 1.2rem;
 }
 .container {
     width: 60%;
+}
+.calendar {
+    background-color: white;
 }
 .header {
     width: 90%;
@@ -45,7 +49,8 @@ body {
     border: 2px solid rgb(240, 240, 240);
 }
 .red {
-    background: coral;
+    background: tomato;
+    color: white;
     border-radius: 50%;
     display: inline-block;
     line-height: 50px;
@@ -53,6 +58,7 @@ body {
 }
 .orange {
     background: orange;
+    color: white;
     border-radius: 50%;
     display: inline-block;
     line-height: 50px;
@@ -60,6 +66,7 @@ body {
 }
 .yellow {
     background: gold;
+    color: white;
     border-radius: 50%;
     display: inline-block;
     line-height: 50px;
@@ -67,6 +74,7 @@ body {
 }
 .green {
     background: yellowgreen;
+    color: white;
     border-radius: 50%;
     display: inline-block;
     line-height: 50px;
@@ -107,13 +115,16 @@ header {
 .day {
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding-right: 2px;
+    font-size: 13px;
+    width: 40px;
+    margin: 2px;
 }
 
 .day div {
     text-align: center;
     font-size: 12px;
+    margin-right: 35px;
+    margin-bottom: -6px;
 }
 
 .contents {
@@ -162,7 +173,7 @@ span:hover #delete-button {
     height: 40px;
     line-height: 40px;
     border-radius: 3px;
-    margin: 4px;
+    margin: 2px;
     text-align: center;
 }
 
@@ -180,6 +191,7 @@ span:hover #delete-button {
 
 .disabled {
     pointer-events: none;
+    opacity: 0.3;
 }
 /* bottom */
 .bottom{
@@ -217,4 +229,22 @@ span:hover #delete-button {
 .bi.bi-plus-lg {
     width: 48px !important;
     height: 48px !important;
+}
+
+.category{
+    margin: 6px;
+    width: 40px;
+    height: 30px;
+}
+
+.day-select {
+    border: none;
+    margin: 0.3rem;
+    font-size: 14px;
+    color: rgb(173, 173, 173);
+    font-weight: bold;
+}
+
+.day-select.selected {
+    color: rgb(2, 163, 2);
 }
