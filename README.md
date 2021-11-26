@@ -38,7 +38,6 @@ npm start
     - 루틴 앱의 첫 페이지로, "Monthly" 버튼을 클릭하면 Monthly View로 교체할 수
 있습니다.
 * Monthly View
-    - 날짜를 클릭하면 Weekly View로 전환되며, 그 날 실행한 루틴 목록을 확인할 수
 있습니다.
     - 그 달의 실행 현황을 색깔로 확인할 수 있습니다.
         - 달성률 33% ↓ : 빨강
@@ -46,6 +45,10 @@ npm start
         - 딜성률 99% ↓ : 노랑
         - 딜상룰 100% : 초록
     - 루틴을 연속으로 실행한 일수를 확인할 수 있습니다.  
+    - 날짜를 클릭하면 Weekly View로 전환되며, 그 날 실행한 루틴 목록을 확인할 수
 
 
 ## Example
+* 앱 실행 초기 화면 
+* Weekly View
+* Monthly View
