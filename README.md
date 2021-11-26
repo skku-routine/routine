@@ -45,7 +45,7 @@ npm start
 
 #### Weekly & Monthly View
 + Weekly View
-    - 그날의 루틴 목록과 그 주의 실행 현황을 함께 확인할 수 있습니다.
+    - 그날의 루틴 목록과 해당 목록에 대한 그 주의 실행 현황을 함께 확인할 수 있습니다.
     - 루틴 앱의 첫 페이지로, "Monthly" 버튼을 클릭하면 Monthly View로 교체할 수 있습니다.
 + Monthly View
     - 그 달의 실행 현황을 색깔로 확인할 수 있습니다.
@@ -54,15 +54,18 @@ npm start
         + 딜성률 99% ↓ : 노랑
         + 딜상룰 100% : 초록
     - 루틴을 연속으로 실행한 일수를 확인할 수 있습니다.  
-    - 날짜를 클릭하면 Weekly View로 전환되며, 그 날 실행한 루틴 목록을 확인할 수 있습니다.
+    - 날짜를 클릭하면 Weekly View로 전환되며, 그날의 루틴 목록을 확인할 수 있습니다.
 
 
 ## Screenshots
 + 앱 실행 초기 화면 
-![](https://user-images.githubusercontent.com/65144472/143606721-a18c0149-8aa7-4fdd-8445-317c2560fb24.png)
+![](https://user-images.githubusercontent.com/83803824/143618972-0e5f6ff7-d7a7-4e25-b52c-660533bed67f.png)
 
 + Weekly View  
-![](https://user-images.githubusercontent.com/65144472/143606773-ee97f2fb-2a24-49cc-9c6d-cdc812585fb8.png)
+![](https://user-images.githubusercontent.com/83803824/143618849-d2b029fb-1866-4119-b9c8-74b05d9785cd.png)
 
 + Monthly View  
-![](https://user-images.githubusercontent.com/65144472/143606855-2bbd24b6-9d80-41d7-a48d-c24be5262b57.png)
+![](https://user-images.githubusercontent.com/83803824/143618901-18176b2d-ca02-4c17-ae9b-00757423b391.png)
+
+
+## Demo Video
