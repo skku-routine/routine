@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Habit Maker | Monthly</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header d-flex align-items-baseline mx-auto">
+            <!-- Month and year information of today -->
+            <button id="backward" class="move btn"><i class="bi bi-chevron-compact-left"></i></button>
+            <h1 id="month-info" class="fw-bold"></h1>
+            <p id="year-info"></p>
+            <button id="forward" class="move btn" disabled><i class="bi bi-chevron-compact-right"></i></button>
+            
+            <!-- How many days the user have done tasks in row -->
+            <p id="notice" class="text-end"></p>
+        </div>
+        
+        <div class="calendar m-5">
+            <div class="week d-flex text-center py-2">
+                <div>SUN</div>
+                <div>MON</div>
+                <div>TUE</div>
+                <div>WED</div>
+                <div>THU</div>
+                <div>FRI</div>
+                <div>SAT</div>
+            </div>
+
+            <!-- Days of this month -->
+            <div class="month d-flex text-center fw-bold">
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+    </script>
+    <script src="monthly.js"></script>
+</body>
+
+</html>

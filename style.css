@@ -1,18 +1,91 @@
+body {
+    background-color: rgb(240, 240, 240);
+    padding: 50px;
+    font-family: "NanumSquare";
+    font-size: 1.2rem;
+}
+.container {
+    width: 60%;
+}
+.calendar {
+    background-color: white;
+}
+.header {
+    width: 90%;
+    position: relative;
+}
+.move {
+    font-size: 2.5rem;
+}
+.move:focus {
+    box-shadow: none;
+}
+.move:disabled {
+    opacity: 10%;
+}
+.move:hover {
+    opacity: 0.5;
+}
+#notice {
+    width: 100%;
+    /*position: absolute;*/
+}
+.week div {
+    width: calc(100%/7);
+}
+.month {
+    flex-wrap: wrap;
+}
+.month div {
+    width: calc(100%/7);
+    height: 70px;
+    line-height: 70px;
+}
+.days:hover {
+    background: rgb(240, 240, 240);
+    opacity: 0.8;
+}
+#current {
+    border: 2px solid rgb(240, 240, 240);
+}
+.red {
+    background: tomato;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.orange {
+    background: orange;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.yellow {
+    background: gold;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
+.green {
+    background: yellowgreen;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    width: 50px;
+}
 
 /* head */
 header {
     border-bottom: 1px solid black;
     margin: 0.5rem;
     margin-bottom: 10px;
-}
-/* body */
-body {
-    width: 720px;
-    margin: auto;
-    margin-bottom: 5%;
-    background-color: rgb(230, 230, 230);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
 }
 
 /* top */
@@ -35,15 +108,23 @@ body {
 .days-of-week {
     display: flex;
     justify-content: flex-end;
-    margin-right: 35px;
-    margin-bottom: -6px;
+    margin-right: 25px;
+    padding-right: 5px;
 }
 
 .day {
-    text-align: center;
+    display: flex;
+    justify-content: flex-end;
     font-size: 13px;
     width: 40px;
     margin: 2px;
+}
+
+.day div {
+    text-align: center;
+    font-size: 12px;
+    margin-right: 35px;
+    margin-bottom: -6px;
 }
 
 .contents {
@@ -108,6 +189,10 @@ span:hover #delete-button {
     content:"❌";
 }
 
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+}
 /* bottom */
 .bottom{
     display: flex;
@@ -162,12 +247,4 @@ span:hover #delete-button {
 
 .day-select.selected {
     color: rgb(2, 163, 2);
-}
-
-.checkbox.disabled {
-    opacity: 0.3;
-}
-
-.checkbox.disabled:hover{
-  opacity: 0.3;
 }
