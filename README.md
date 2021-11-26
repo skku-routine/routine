@@ -53,5 +53,10 @@ npm start
 
 ## Example
 * 앱 실행 초기 화면 
+![](https://user-images.githubusercontent.com/65144472/143606721-a18c0149-8aa7-4fdd-8445-317c2560fb24.png)
+
 * Weekly View
+![](https://user-images.githubusercontent.com/65144472/143606773-ee97f2fb-2a24-49cc-9c6d-cdc812585fb8.png)
+
 * Monthly View
+![](https://user-images.githubusercontent.com/65144472/143606855-2bbd24b6-9d80-41d7-a48d-c24be5262b57.png)
