@@ -4,11 +4,11 @@
 
 ## Install
 git clone 후, electron을 설치하고(“npm install electron”) 터미널 창에 “npm start”를 입력하면 실행됩니다.
-'''
+```
 git clone https://github.com/skku-routine/routine.git
 npm install electron
 npm start
-'''
+```
 
 ## Usage
 
