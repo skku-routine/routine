@@ -3,12 +3,8 @@
 잊어버리기 쉽지만 캘린더에 기록하기엔 거창한 반복 일정을 계획하고, 실천 현황을 기록합니다.
 
 ## Install
-git clone 후, electron을 설치하고(“npm install electron”) 터미널 창에 “npm start”를 입력하면 실행됩니다.
-```
-git clone https://github.com/skku-routine/routine.git
-npm install electron
-npm start
-```
+Releases에서 'routine-win32-x64.zip'를 다운받고,
+압축 해제 후 'routine.exe'를 실행하시면 됩니다.
 
 ## Usage
 
@@ -45,8 +41,8 @@ npm start
     - 그 달의 실행 현황을 색깔로 확인할 수 있습니다.
         - 달성률 33% ↓ : 빨강
         - 달성률 66% ↓ : 주황
-        - 딜성률 99% ↓ : 노랑
-        - 딜상룰 100% : 초록
+        - 달성률 99% ↓ : 노랑
+        - 달성률 100% : 초록
     - 루틴을 연속으로 실행한 일수를 확인할 수 있습니다.  
     - 날짜를 클릭하면 Weekly View로 전환되며, 그 날 실행한 루틴 목록을 확인할 수 있습니다.
 
