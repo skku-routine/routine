@@ -2,13 +2,13 @@
   "name": "routine",
   "version": "1.0.0",
   "description": "잊어버리기 쉽지만 캘린더에 기록하기엔 거창한 반복 일정을 계획하고, 실천 현황을 기록합니다.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hans-0101/routine.git"
+    "url": "git+https://github.com/skku-routine/routine.git"
   },
   "author": "TEAM_11",
   "contributors": [
@@ -18,7 +18,13 @@
   ],
   "license": "MIT License",
   "bugs": {
-    "url": "https://github.com/Hans-0101/routine/issues"
+    "url": "https://github.com/skku-routine/routine/issues"
   },
-  "homepage": "https://github.com/Hans-0101/routine#readme"
+  "homepage": "https://github.com/skku-routine/routine#readme",
+  "devDependencies": {
+    "electron": "^16.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
 }
