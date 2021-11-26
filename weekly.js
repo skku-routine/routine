@@ -28,7 +28,7 @@ function parseURL()
     }
 
     document.querySelector(".today").textContent =
-        todays[0] + " " + todays[1] + " " + week[today.getDay()];
+        todays[0] + " " + todays[1] + " " + todays[2] + " " +  week[today.getDay()];
 }
 
 // Accomplishment status
@@ -254,7 +254,10 @@ submitButton.addEventListener("click", () => {
     document.getElementById("nameText").value = "";
     document.getElementById("categoryText").value = "";
     document.querySelector(".inputArea").hidden = true;
-    selectDays.forEach(e => e.classList.remove("selected"));
+    selectDays.forEach(e => {
+        if (!e.classList.contains("selected"))
+            e.classList.add("selected");
+    });
 
     addToStorage(newHabit);
     addHabit(newHabit);
