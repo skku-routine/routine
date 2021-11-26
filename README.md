@@ -1,12 +1,10 @@
 # SKKU-ROUTINE
 
 ## Install
----
 git clone 후, electron을 설치하고(“npm install electron”) 터미널 창에
 “npm start”를 입력하면 실행됩니다.
 
 ## Usage
----
 * 앱 실행
     - 환영 메시지와 함께 코로나 관련 시설 이용 방침 안내창이
 뜹니다. 각 시설을 클릭하면 간단한 정보를 안내받을 수 있습니다.
@@ -31,4 +29,3 @@ git clone 후, electron을 설치하고(“npm install electron”) 터미널 �
     - 종료 시 현재 상태가 저장됩니다.
 
 ## Example
----
