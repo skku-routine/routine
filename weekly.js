@@ -37,28 +37,6 @@ const Status = {
     Done: 1
 };
 
-// Correct records of this week in case the user didn't logged in for a while
-function correctRecord(firstDate)
-{
-    let date, dateValue = firstDate.getDate();
-
-    for (let i = 0; i < 30; i++) {
-        date = new Date(firstDate);
-        date.setDate(dateValue--);
-        
-        let routine = localStorage.getItem(date.string());
-        console.log(date.string());
-        if (routine) {
-            archive = JSON.parse(routine);
-            archive.forEach(habit => habit.stat = 0);
-            
-            records[firstDate.string()] = archive;
-            return;
-        }
-    }
-    records[firstDate.string()] = [];
-}
-
 // Load data when window is loaded
 function loadHabits(date, dayValue)
 {
@@ -224,9 +202,6 @@ function buildWeek()
 {
     let data = localStorage.getItem("habits");
     if (data) archive = JSON.parse(data);
-    //let date = new Date(today);
-    //date.setDate(dateValue);
-    //correctRecord(date);
 
     let dateValue = today.getDate() - today.getDay();
     for (let i = 0; i < 7; i++) {

@@ -10,23 +10,6 @@ Date.prototype.string = function () {
     return [yyyy, ("0" + mm).slice(-2), ("0" + dd).slice(-2)].join("-");
 }
 
-function correctRecord()
-{
-    records = [];
-
-    let bound = new Date(today.getFullYear(), today.getMonth(), 0);
-    let date = bound.string().slice(0, 8); bound = bound.getDate();
-
-    for (let i = bound; i > 0; i--) {
-        let data = localStorage.getItem(date+("0" + i).slice(-2));
-        if (data) {
-            records = JSON.parse(data);
-            records.forEach(habit => habit.stat = 0);
-            return;
-        }
-    }
-}
-
 let definedHabit = {
     name: "",
     stat : 0
@@ -52,17 +35,6 @@ function loadStorage(date, dayValue)
     else if (status < 0.66) return "orange";
     else if (status < 0.99) return "yellow";
     else return "green";
-}
-
-function saveStorage(date)
-{
-    /*let data = [{name: "take a walk", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "일상=#ff0000"},
-                    {name: "exercise", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "운동=#15fd00"},
-                    {name: "mylove", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "사랑=#d53151"},
-                    {name: "youare", days: [1, 1, 1, 1, 1, 1, 1], created: "2021-10-29", deleted:"2021-11-05", category: "정의=#f3ca7b"},
-                    {name: "what", days: [1, 0, 0, 0, 0, 0, 1], created: "2021-02-27", deleted:"2021-06-18", category: "뭐여=#000000"}];
-    //let data = [{name: "take a walk", stat: 1}, {name: "exercise", stat: 1}, {name: "mylove", stat: 0}, {name: "youare", stat: 1}];*/
-    localStorage.setItem("habits", JSON.stringify(data));
 }
 
 function buildMonth()
@@ -134,7 +106,6 @@ function buildMonth()
 }
 
 window.addEventListener("load", () => {
-    //saveStorage("2021-10-30");
     buildMonth();
 });
 
