@@ -3,12 +3,8 @@
 잊어버리기 쉽지만 캘린더에 기록하기엔 거창한 반복 일정을 계획하고, 실천 현황을 기록합니다.
 
 ## Install
-git clone 후, electron을 설치하고(“npm install electron”) 터미널 창에 “npm start”를 입력하면 실행됩니다.
-```
-git clone https://github.com/skku-routine/routine.git
-npm install electron
-npm start
-```
+Releases에서 'routine-win32-x64.zip'를 다운받고,
+압축 해제 후 'routine.exe'를 실행하시면 됩니다.
 
 ## Usage
 
